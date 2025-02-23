@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Eureka" />
+        <module name="API-GATEWAY" />
+      </profile>
+      <profile name="Annotation profile for Document" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="Entreprise" />
+        <module name="Evenement" />
+        <module name="OffreStage" />
+        <module name="Etudiant" />
+        <module name="User" />
+        <module name="Enseignant" />
+        <module name="Document" />
+        <module name="Admin" />
+        <module name="Soutenance" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API-GATEWAY" options="-parameters" />
+      <module name="Admin" options="-parameters" />
+      <module name="Document" options="-parameters" />
+      <module name="Enseignant" options="-parameters" />
+      <module name="Entreprise" options="-parameters" />
+      <module name="Etudiant" options="-parameters" />
+      <module name="Eureka" options="-parameters" />
+      <module name="Evenement" options="-parameters" />
+      <module name="OffreStage" options="-parameters" />
+      <module name="Soutenance" options="-parameters" />
+      <module name="User" options="-parameters" />
+    </option>
+  </component>
+</project>
