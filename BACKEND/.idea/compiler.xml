@@ -10,7 +10,7 @@
         <module name="Eureka" />
         <module name="API-GATEWAY" />
       </profile>
-      <profile name="Annotation profile for Document" enabled="true">
+      <profile name="Annotation profile for ValidationDocument" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,6 +22,7 @@
         <module name="OffreStage" />
         <module name="Etudiant" />
         <module name="User" />
+        <module name="ValidationDocument" />
         <module name="Enseignant" />
         <module name="Document" />
         <module name="Admin" />
@@ -42,6 +43,7 @@
       <module name="OffreStage" options="-parameters" />
       <module name="Soutenance" options="-parameters" />
       <module name="User" options="-parameters" />
+      <module name="ValidationDocument" options="-parameters" />
     </option>
   </component>
 </project>
