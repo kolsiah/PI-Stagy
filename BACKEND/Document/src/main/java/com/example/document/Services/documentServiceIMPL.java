@@ -2,9 +2,11 @@ package com.example.document.Services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.document.DTO.ValidationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.kafka.annotation.KafkaListener;
 import com.example.document.Entity.Document;
 import com.example.document.Entity.Statut;
 import com.example.document.Entity.Type;
@@ -114,6 +116,19 @@ public class documentServiceIMPL implements documentService {
 
         return url;
     }
+   /* @KafkaListener(topics = "validation-events", groupId = "${spring.kafka.consumer.group-id}")
+    public void consumeValidationEvent(ValidationEvent event) {
+        int documentId = event.getDocumentId();
+        Statut statut = Statut.valueOf(event.getStatus());
+        Document document = dR.findById(documentId).orElseThrow(() -> new IllegalArgumentException("Document not found"));
+
+        // Update the document status based on the validation event
+        document.setStatutDocument(statut);
+        dR.save(document);
+
+        // Log the update or perform additional operations if needed
+        System.out.println("Document " + documentId + " updated with status " + statut);
+    }*/
 
 
     /*private String convertToPdf(MultipartFile file) throws IOException {

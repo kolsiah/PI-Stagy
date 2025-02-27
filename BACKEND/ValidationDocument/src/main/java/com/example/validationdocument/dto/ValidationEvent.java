@@ -1,8 +1,5 @@
 package com.example.validationdocument.dto;
 
-
-
-
 public class ValidationEvent {
     private int documentId;
     private String status; // "APPROVED" or "REJECTED"
