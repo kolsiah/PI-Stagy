@@ -10,7 +10,7 @@
         <module name="Eureka" />
         <module name="API-GATEWAY" />
       </profile>
-      <profile name="Annotation profile for ValidationDocument" enabled="true">
+      <profile name="Annotation profile for Document" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
