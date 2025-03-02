@@ -12,7 +12,7 @@ ListDoc : Document[] = [];
 
   constructor(private LD  : DocumentService) { }
   ngOnInit(): void {
-    this.LD.getDocument().subscribe(data => this.ListDoc = data);
+    this.LD.getDocument().subscribe(doua => this.ListDoc = doua);
   }
   deleteDOC(idDocument : number): void{
     if (confirm('Are you sure you want to delete this document?')) {

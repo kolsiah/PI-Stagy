@@ -4,8 +4,10 @@ import { ListDocumentComponent } from './list-document/list-document.component';
 import { AddDocumentComponent } from './add-document/add-document.component';
 
 const routes: Routes = [
+  {path:'',redirectTo:'List',pathMatch:'full'},
   {path:'List',component:ListDocumentComponent},
-  {path:'Add',component:AddDocumentComponent}
+  {path:'Add',component:AddDocumentComponent},
+  //{path:'**',}
 ];
 
 @NgModule({

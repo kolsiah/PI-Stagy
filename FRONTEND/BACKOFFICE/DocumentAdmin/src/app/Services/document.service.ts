@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Document } from '../Model/DocumentMod';
@@ -8,9 +8,8 @@ import { Document } from '../Model/DocumentMod';
 export class DocumentService {
 private apiURL = 'http://localhost:8087/documents';
   constructor(private http : HttpClient) { }
-  uploadDocument(formData: FormData):Observable<string> {
-    return this.http.post(this.apiURL, formData,{
-      responseType: 'text'});
+  uploadDocument(formData: FormData): Observable<string> {
+    return this.http.post<string>(this.apiURL+"/upload", formData,{ responseType: 'text' as 'json' });
   }
   getDocument():Observable<Document[]>{
     return this.http.get<Document[]>(this.apiURL);

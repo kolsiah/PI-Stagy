@@ -57,6 +57,7 @@ public class documentServiceIMPL implements documentService {
 
     @Override
     public void deleteDocument(int id) {
+
         dR.deleteById(id);
     }
     /*public String uploadFile(MultipartFile file, String titreDocument, Type typeDocument, Statut statutDocument, int etudiantId, int stageId) throws IOException {

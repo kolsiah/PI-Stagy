@@ -1,6 +1,7 @@
 package com.example.document.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +45,7 @@ public class documentController {
         documentService.deleteDocument(id);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadDocument(
             @RequestParam("file") MultipartFile file,
             @RequestParam("titreDocument") String titreDocument,

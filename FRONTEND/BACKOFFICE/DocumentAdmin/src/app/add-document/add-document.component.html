@@ -540,7 +540,12 @@
               
                     <!-- Submit -->
                     <button type="submit" class="btn btn-primary mr-2" [disabled]="documentForm.invalid">Submit</button>
-              
+                    <div *ngIf="uploadMessage" class="upload-message">
+                      <!-- Check if the message contains a URL and turn it into a clickable link -->
+                      <a *ngIf="uploadMessage.includes('http')" [href]="uploadMessage.split(' ')[3]" target="_blank">
+                        Click here to view the uploaded file
+                      </a>
+                    </div>
                   </form>
                 </div>
               </div>
