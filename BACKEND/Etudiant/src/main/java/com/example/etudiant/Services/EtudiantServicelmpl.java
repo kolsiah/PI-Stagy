@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EtudiantServicelmpl implements IEtudiantService {
@@ -26,20 +27,19 @@ public class EtudiantServicelmpl implements IEtudiantService {
         return savedEtudiant;
     }
 
-
     @Override
     public Etudiant modifierEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
     }
 
     @Override
-    public void supprimerEtudiant(Long id) {  // Utiliser Long
+    public void supprimerEtudiant(Long id) {
         etudiantRepository.deleteById(id);
     }
 
     @Override
-    public Etudiant getEtudiantById(Long id) {  // Utiliser Long
-        return etudiantRepository.findById((long) Math.toIntExact(id))
+    public Etudiant getEtudiantById(Long id) {
+        return etudiantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Étudiant non trouvé !"));
     }
 
@@ -47,7 +47,7 @@ public class EtudiantServicelmpl implements IEtudiantService {
     public List<Etudiant> getAllEtudiants() {
         return etudiantRepository.findAll();
     }
-    // service avancee de verification du diplome
+
     @Override
     public boolean verifierDiplome(Long etudiantId, String typeDiplome, String universite) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(etudiantId);
@@ -56,11 +56,20 @@ public class EtudiantServicelmpl implements IEtudiantService {
         }
 
         return etudiant.get().getDiplomes().stream()
-                .anyMatch(d -> d.getTypeDiplome().equals(typeDiplome) && d.getUniversite().equals(universite) && d.isVerifie());
+                .anyMatch(d -> d.getTypeDiplome().equalsIgnoreCase(typeDiplome) &&
+                        d.getUniversite().equalsIgnoreCase(universite) && d.isVerifie());
     }
+
     @Override
     public List<Etudiant> getEtudiantsParSpecialite(String specialite) {
         return etudiantRepository.findBySpecialite(specialite);
     }
-
+// Recommandation d'Étudiants aux Entreprises
+    @Override
+    public List<Etudiant> recommanderEtudiants(String specialite, int minDiplomes) {
+        return etudiantRepository.findAll().stream()
+                .filter(etudiant -> etudiant.getSpecialite().equalsIgnoreCase(specialite))
+                .filter(etudiant -> etudiant.getDiplomes().size() >= minDiplomes)
+                .collect(Collectors.toList());
+    }
 }

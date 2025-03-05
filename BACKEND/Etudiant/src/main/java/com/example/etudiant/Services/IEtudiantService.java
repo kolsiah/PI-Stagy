@@ -12,4 +12,6 @@ public interface IEtudiantService {
     boolean verifierDiplome(Long etudiantId, String typeDiplome, String universite);
     // ✅ Ajouter la méthode pour récupérer les étudiants par spécialité
     List<Etudiant> getEtudiantsParSpecialite(String specialite);
+
+    List<Etudiant> recommanderEtudiants(String specialite, int minDiplomes);
 }

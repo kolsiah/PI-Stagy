@@ -74,4 +74,8 @@ public class EtudiantController {
     public List<Etudiant> getEtudiantsParSpecialite(@PathVariable String specialite) {
         return etudiantService.getEtudiantsParSpecialite(specialite);
     }
+    @GetMapping("/recommandation")
+    public List<Etudiant> recommanderEtudiants(@RequestParam String specialite, @RequestParam int minDiplomes) {
+        return etudiantService.recommanderEtudiants(specialite, minDiplomes);
+    }
 }
