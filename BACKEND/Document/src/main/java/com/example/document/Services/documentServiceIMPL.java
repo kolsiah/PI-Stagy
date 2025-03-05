@@ -47,7 +47,7 @@ public class documentServiceIMPL implements documentService {
             docToUpdate.setUrlDocument(document.getUrlDocument());
             docToUpdate.setTypeDocument(document.getTypeDocument());
             docToUpdate.setStatutDocument(document.getStatutDocument());
-            docToUpdate.setDateUpload(document.getDateUpload());
+            docToUpdate.setDateUpload(new Date());
             docToUpdate.setEtudiantId(document.getEtudiantId());
             docToUpdate.setStageId(document.getStageId());
             return dR.save(docToUpdate);
