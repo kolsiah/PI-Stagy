@@ -78,4 +78,5 @@ public class EtudiantController {
     public List<Etudiant> recommanderEtudiants(@RequestParam String specialite, @RequestParam int minDiplomes) {
         return etudiantService.recommanderEtudiants(specialite, minDiplomes);
     }
+
 }
