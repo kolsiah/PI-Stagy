@@ -16,7 +16,14 @@
         <option value="$PROJECT_DIR$/Soutenance/pom.xml" />
         <option value="$PROJECT_DIR$/API-GATEWAY/pom.xml" />
         <option value="$PROJECT_DIR$/ValidationDocument/pom.xml" />
+        <option value="$PROJECT_DIR$/../../PI-DOUA/Doua-PI/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../../PI-DOUA/Doua-PI/pom.xml" />
+        <option value="$PROJECT_DIR$/../../PI-DOUA/Doua-pi/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="corretto-21" project-jdk-type="JavaSDK">

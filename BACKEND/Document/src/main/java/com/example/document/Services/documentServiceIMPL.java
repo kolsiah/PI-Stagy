@@ -117,6 +117,16 @@ public class documentServiceIMPL implements documentService {
 
         return url;
     }
+    public boolean updateDocumentStatus(int id, String status) {
+        Optional<Document> optionalDoc = dR.findById(id);
+        if (optionalDoc.isPresent()) {
+            Document doc = optionalDoc.get();
+            doc.setStatutDocument(Statut.valueOf(status));
+            dR.save(doc);
+            return true;
+        }
+        return false;
+    }
    /* @KafkaListener(topics = "validation-events", groupId = "${spring.kafka.consumer.group-id}")
     public void consumeValidationEvent(ValidationEvent event) {
         int documentId = event.getDocumentId();

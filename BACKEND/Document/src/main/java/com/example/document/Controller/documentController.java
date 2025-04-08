@@ -1,6 +1,8 @@
 package com.example.document.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,31 +23,37 @@ public class documentController {
     private documentServiceIMPL documentService;
 
     @GetMapping
+    @Operation(summary = "Retreive all documents")
     public ResponseEntity<List<Document>> getAllDocuments() {
         return ResponseEntity.ok(documentService.getAllDocuments());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Retreive document by ID")
     public ResponseEntity<Document> getDocumentById(@PathVariable int id) {
         return ResponseEntity.ok(documentService.getDocumentById(id));
     }
 
     @PostMapping
+    @Operation(summary = "Insert new document")
     public ResponseEntity<Document> createDocument(@RequestBody Document document) {
         return ResponseEntity.ok(documentService.createDocument(document));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update document by ID")
     public ResponseEntity<Document> updateDocument(@PathVariable int id, @RequestBody Document document) {
         return ResponseEntity.ok(documentService.updateDocument(id, document));
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete document by ID")
     public ResponseEntity<Void> deleteDocument(@PathVariable int id) {
         documentService.deleteDocument(id);
         return ResponseEntity.noContent().build();
     }
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Insert document with pdf File. it will be treated by an external Cloud Storage")
     public ResponseEntity<String> uploadDocument(
             @RequestParam("file") MultipartFile file,
             @RequestParam("titreDocument") String titreDocument,
@@ -65,6 +73,16 @@ public class documentController {
             return ResponseEntity.ok("File uploaded successfully: " + fileUrl);
         } catch (IOException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/{id}/status")
+    @Operation(summary = "Update document Status")
+    public ResponseEntity<String> updateDocumentStatus(@PathVariable int id, @RequestParam String status) {
+        boolean updated = documentService.updateDocumentStatus(id, status);
+        if (updated) {
+            return ResponseEntity.ok("Document status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Document not found.");
         }
     }
 }

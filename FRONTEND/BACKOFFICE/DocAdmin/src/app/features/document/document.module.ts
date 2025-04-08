@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../shared/shared.module";
 import { UpdateDocumentComponent } from './components/update-document/update-document.component';
+import { AddValidationComponent } from './components/add-validation/add-validation.component';
 
 
 @NgModule({
   declarations: [
     AddDocumentComponent,
     ListDocumentComponent,
-    UpdateDocumentComponent
+    UpdateDocumentComponent,
+    AddValidationComponent,
   ],
   imports: [
     CommonModule,

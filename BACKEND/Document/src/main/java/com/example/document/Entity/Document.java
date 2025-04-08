@@ -1,5 +1,6 @@
 package com.example.document.Entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Document implements Serializable {
     private int idDocument;
 
     private String titreDocument;
+    @Schema(hidden = true)
     private String urlDocument;
 
     @Enumerated(EnumType.STRING)

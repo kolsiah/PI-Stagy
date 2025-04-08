@@ -1,6 +1,6 @@
 package com.example.validationdocument.Kafka;
 
-import com.example.validationdocument.dto.ValidationEvent;
+/*import com.example.validationdocument.dto.ValidationEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -26,4 +26,4 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, ValidationEvent> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-}
+}*/

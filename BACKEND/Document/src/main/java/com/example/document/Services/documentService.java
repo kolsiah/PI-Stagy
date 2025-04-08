@@ -16,4 +16,5 @@ public interface documentService {
     void deleteDocument(int id);
     String uploadFile(MultipartFile file, String titreDocument, Type typeDocument, Statut statutDocument, int etudiantId, int stageId)throws IOException;
   //  public void consumeValidationEvent(ValidationEvent event);
+  public boolean updateDocumentStatus(int id, String status);
 }

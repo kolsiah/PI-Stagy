@@ -462,80 +462,56 @@
           </nav>
           <div class="main-panel">
             <div class="content-wrapper">
-              <div class="body">
+              <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Documents:</h4>
-                    <!-- Sort Button -->
-                  <div class="form-group">
-                    <button class="mdi mdi-sort" (click)="sortDocuments()">Sort by Date</button>
-                  </div>
-                  <!-- Search Input -->
-                  <div class="form-group">
-                    <label for="searchCriteria">Search By</label>
-                    <select id="searchCriteria" class="form-control" [(ngModel)]="selectedCriteria">
-                      <option value="studentId">Student ID</option>
-                      <option value="documentTitle">Document Title</option>
-                      <option value="statut">Statut</option>
-                    </select>
-                  </div>
+                  <h4 class="card-title">Validate Document</h4>
+                  <p class="card-description">Fill in the details and upload your PDF file</p>
+  
+                  <form [formGroup]="validationForm" (ngSubmit)="onValidateDocument()" class="forms-sample">
+                    <!-- Displaying idDocument which is fetched from route -->
+                    <div class="form-group">
+                      <label for="idDocument">Document ID:</label>
+                      <input type="number" class="form-control" id="idDocument" [value]="idDocument" readonly>
+                    </div>
                   
-                  <div class="form-group">
-                    <label for="searchValue">Search Value</label>
-                    <input
-                      type="text"
-                      id="searchValue"
-                      class="form-control"
-                      [(ngModel)]="searchValue"
-                      placeholder="Enter search value"
-                    />
-                  </div>
-                            
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>DocumentId</th>
-                          <th>StudentId</th>
-                          <th>StageId</th>
-                          <th>Document Title</th>
-                          <th>Document URL</th>
-                          <th>Document Type</th>
-                          <th>Document Status</th>
-                          <th>Upload date</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let doc of getFilteredDocuments()">
-                          <td>{{ doc.idDocument }}</td>
-                          <td>{{ doc.etudiantId }}</td>
-                          <td>{{ doc.stageId }}</td>
-                          <td>{{ doc.titreDocument }}</td>
-                          <td>
-                            <a [href]="doc.urlDocument" target="_blank">Click to view the document</a>
-                          </td>
-                          <td>{{ doc.typeDocument }}</td>
-                          <td>
-                            <label
-                              class="badge"
-                              [ngClass]="{
-                                'badge-success': doc.statutDocument === 'validé',
-                                'badge-danger': doc.statutDocument === 'rejeté',
-                                'badge-warning': doc.statutDocument === 'en_attente'
-                              }"
-                            >
-                              {{ doc.statutDocument }}
-                            </label>
-                          </td>
-                          <td>{{ doc.dateUpload | date:'dd MMM yyyy' }}</td>
-                          <td>
-                            <button class="mdi mdi-delete" (click)="deleteDOC(doc.idDocument)"></button>
-                            <button class="mdi mdi-pencil" [routerLink]="['/document/update', doc.idDocument]"></button>
-                            <button class="mdi mdi-account-check" [routerLink]="['/document/validate', doc.idDocument]"></button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <!-- Input for idEncadrant -->
+                    <div class="form-group">
+                      <label for="idEncadrant">Encadrant ID:</label>
+                      <input type="number" class="form-control" id="idEncadrant" formControlName="idEncadrant">
+                      <div *ngIf="validationForm.controls['idEncadrant'].invalid && validationForm.controls['idEncadrant'].touched">
+                        <small class="text-danger">Encadrant ID is required.</small>
+                      </div>
+                    </div>
+                  
+                    <!-- Dropdown for statut -->
+                    <div class="form-group">
+                      <label for="statut">Statut:</label>
+                      <select class="form-control" id="statut" formControlName="statut">
+                        <option value="validé">Validé</option>
+                        <option value="rejeté">Rejeté</option>
+                        <option value="en_attente">En Attente</option>
+                      </select>
+                      <div *ngIf="validationForm.controls['statut'].invalid && validationForm.controls['statut'].touched">
+                        <small class="text-danger">Statut is required.</small>
+                      </div>
+                    </div>
+                  
+                    <!-- Input for commentaire -->
+                    <div class="form-group">
+                      <label for="commentaire">Commentaire:</label>
+                      <textarea class="form-control" id="commentaire" formControlName="commentaire"></textarea>
+                      <div *ngIf="validationForm.controls['commentaire'].invalid && validationForm.controls['commentaire'].touched">
+                        <small class="text-danger">Commentaire is required.</small>
+                      </div>
+                    </div>
+                  
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" [disabled]="validationForm.invalid">Validate</button>
+                  </form>
+                  
+                
+                  <div *ngIf="responseMessage">
+                    <p>{{ responseMessage }}</p>
                   </div>
                 </div>
               </div>

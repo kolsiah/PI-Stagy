@@ -1,0 +1,7 @@
+export class Validationnn {
+  idValidation: number;
+  idDocument: number;
+  idEncadrant: number;
+  statut: string;
+  commentaire: string;
+}

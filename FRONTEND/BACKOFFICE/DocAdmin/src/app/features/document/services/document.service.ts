@@ -6,7 +6,7 @@ import { Document } from '../Model/DocumentMod';
   providedIn: 'root'
 })
 export class DocumentService {
-private apiURL = 'http://localhost:8087/documents';
+private apiURL = 'http://localhost:8084/documents';
   constructor(private http : HttpClient) { }
   uploadDocument(formData: FormData): Observable<string> {
     return this.http.post<string>(this.apiURL+"/upload", formData,{ responseType: 'text' as 'json' });

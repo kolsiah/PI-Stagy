@@ -1,5 +1,5 @@
 package com.example.validationdocument.Entity;
 
 public enum StatutV {
-    APPROVED, REJECTED, PENDING
+    validé,rejeté,en_attente
 }

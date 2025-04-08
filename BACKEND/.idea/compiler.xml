@@ -10,15 +10,15 @@
         <module name="Eureka" />
         <module name="API-GATEWAY" />
       </profile>
-      <profile name="Annotation profile for ValidationDocument" enabled="true">
+      <profile name="Annotation profile for Document" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
-        <module name="Entreprise" />
         <module name="Evenement" />
+        <module name="Entreprise" />
         <module name="OffreStage" />
         <module name="Etudiant" />
         <module name="User" />
@@ -29,12 +29,16 @@
         <module name="Soutenance" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Doua-PI" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="API-GATEWAY" options="-parameters" />
       <module name="Admin" options="-parameters" />
       <module name="Document" options="-parameters" />
+      <module name="Doua-PI" options="-parameters" />
       <module name="Enseignant" options="-parameters" />
       <module name="Entreprise" options="-parameters" />
       <module name="Etudiant" options="-parameters" />

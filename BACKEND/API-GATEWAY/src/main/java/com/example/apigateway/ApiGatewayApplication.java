@@ -22,6 +22,8 @@ public class ApiGatewayApplication {
 						.uri("http://localhost:8081"))
 				.route("Document", r ->r.path("/documents/**")
 						.uri("http://localhost:8087"))
+				.route("Validation",r ->r.path("/validations/**")
+						.uri("http://localhost:8088"))
 				.build();
 	}
 }

@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListDocumentComponent } from './components/list-document/list-document.component';
 import { AddDocumentComponent } from './components/add-document/add-document.component';
 import { UpdateDocumentComponent } from './components/update-document/update-document.component';
+import { AddValidationComponent } from './components/add-validation/add-validation.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'list',pathMatch:'full'},
   {path:'list',component:ListDocumentComponent},
   {path:'add',component:AddDocumentComponent},
-  {path:'update/:idDocument',component:UpdateDocumentComponent}
+  {path:'update/:idDocument',component:UpdateDocumentComponent},
+  {path:'validate/:idDocument',component:AddValidationComponent}
 ];
 
 @NgModule({

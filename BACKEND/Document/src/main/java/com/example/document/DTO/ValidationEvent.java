@@ -2,7 +2,7 @@ package com.example.document.DTO;
 
 public class ValidationEvent {
     private int documentId;
-    private String status; // "APPROVED" or "REJECTED"
+    private String status;
     private String commentaire;
 
     public ValidationEvent(int documentId, String status, String commentaire) {
