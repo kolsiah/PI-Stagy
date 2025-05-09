@@ -1,0 +1,67 @@
+server:
+  port: 8085  # Port de l'API Gateway
+
+spring:
+  application:
+    name: GateWay
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"  # Ensure only one origin is allowed
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+        add-to-simple-url-handler-mapping: true
+      routes:
+        - id: offrestage-offres
+          uri: lb://OffreStage
+          predicates:
+            - Path=/offres/**
+          filters:
+            - RequestSize=10MB  # Pour éviter les erreurs de taille de requête
+            - fallbackUri=forward:/fallback/offre
+
+        - id: offrestage-candidatures
+          uri: lb://OffreStage
+          predicates:
+            - Path=/candidatures/**
+          filters:
+            - DebugResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - RequestSize=10MB  # Pour éviter les erreurs de taille de requête
+            - fallbackUri=forward:/fallback/candidature
+  httpclient:
+    connect-timeout: 5000  # 5 secondes pour se connecter
+    response-timeout: 10s   # 10 secondes pour recevoir la réponse
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG  # ✅ Active les logs détaillés
+    com.netflix.discovery: DEBUG
+    com.netflix.eureka: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # ✅ Active tous les endpoints Actuator

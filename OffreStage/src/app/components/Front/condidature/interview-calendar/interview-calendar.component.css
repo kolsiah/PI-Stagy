@@ -1,0 +1,17 @@
+.calendar-container {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Customize calendar appearance */
+  .fc-event {
+    cursor: pointer;
+    font-size: 0.85em;
+    padding: 2px 5px;
+  }
+  
+  .fc-daygrid-event-dot {
+    display: none; /* Hide the default dot */
+  }

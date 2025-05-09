@@ -1,0 +1,150 @@
+<app-navbar-hr></app-navbar-hr>
+<br><br><br><br><br><br>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liste des Candidatures</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #f9fbfd, #f0f4f8);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .table {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    .btn-custom-primary {
+      background-color: #00b4d8;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 6px 16px;
+    }
+    .btn-custom-primary:hover {
+      background-color: #0096c7;
+    }
+    .btn-custom-warning {
+      background-color: #ffca3a;
+      color: #212529;
+      border: none;
+      border-radius: 50px;
+      padding: 6px 16px;
+    }
+    .btn-custom-warning:hover {
+      background-color: #f4a261;
+      color: white;
+    }
+    .btn-custom-danger {
+      background-color: #f94144;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 6px 16px;
+    }
+    .btn-custom-danger:hover {
+      background-color: #d62828;
+    }
+    h2 {
+      color: #023e8a;
+      font-weight: bold;
+    }
+    .alert {
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5 pt-5">
+    <h2 class="text-center mb-4">Liste des Candidatures</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">{{ errorMessage }}</div>
+    <div class="table-responsive">
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Offre</th>
+            <th>CV</th>
+            <th>Lettre de Motivation</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidature of candidatures">
+            <td>{{ candidature.offreStage.titre }}</td>
+            <td><a [href]="candidature.cvPath" target="_blank" class="btn btn-custom-primary btn-sm">Voir CV</a></td>
+            <td><a [href]="candidature.lettreMotivationPath" target="_blank" class="btn btn-custom-primary btn-sm">Voir Lettre</a></td>
+            <td>
+              <span [class.status-active]="candidature.etat === 'acceptée'" 
+                    [class.status-expired]="candidature.etat === 'refusée'">
+                {{ candidature.etat }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-custom-primary btn-sm" (click)="openInterviewModal(candidature)">
+                <i class="bi bi-check-circle"></i> Accepter
+              </button>
+              <button class="btn btn-custom-warning btn-sm" (click)="updateStatus(candidature, 'refusée')">
+                <i class="bi bi-x-circle"></i> Refuser
+              </button>
+              <button class="btn btn-custom-danger btn-sm" (click)="deleteCandidature(candidature)">
+                <i class="bi bi-trash"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<app-start-process></app-start-process>
+
+<div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form (ngSubmit)="submitInterview()" #interviewForm="ngForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="interviewModalLabel">Ajouter un entretien</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="dateEntretien" class="form-label">Date et heure</label>
+            <input type="datetime-local" class="form-control" [(ngModel)]="newInterview.dateEntretien" name="dateEntretien" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="mode" class="form-label">Mode</label>
+            <select class="form-control" [(ngModel)]="newInterview.mode" name="mode" required>
+              <option value="Présentiel">Présentiel</option>
+              <option value="En ligne">En ligne</option>
+              <option value="Téléphonique">Téléphonique</option>
+            </select>
+          </div>
+
+          <div class="mb-3" *ngIf="newInterview.mode === 'En ligne'">
+            <label for="lienVisio" class="form-label">Lien Visio</label>
+            <input type="text" class="form-control" [(ngModel)]="newInterview.lienVisio" name="lienVisio">
+          </div>
+
+          <div class="mb-3">
+            <label for="commentaire" class="form-label">Commentaire</label>
+            <textarea class="form-control" [(ngModel)]="newInterview.commentaire" name="commentaire"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Enregistrer</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

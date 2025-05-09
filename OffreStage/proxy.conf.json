@@ -1,0 +1,20 @@
+{
+    "/offres": {
+        "target": "http://localhost:8085",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/candidatures": {
+        "target": "http://localhost:8085",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/entreprises": {
+        "target": "http://localhost:8085",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

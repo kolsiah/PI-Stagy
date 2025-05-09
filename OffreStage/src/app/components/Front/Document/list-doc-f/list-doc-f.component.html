@@ -1,0 +1,124 @@
+<app-navbar-hr></app-navbar-hr>
+<br><br><br>
+<div class="container py-5">
+    <h2 class="text-center mb-4 text-primary">📁 Mes Documents</h2>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+
+      <!-- 🎯 Bouton voir validations -->
+      <div>
+        <a routerLink="/validation/etudiant" class="btn btn-outline-primary rounded-pill">
+          📑 Documents validés
+        </a>
+      </div>
+    
+      <!-- 🔍 Zone de recherche -->
+      <div class="flex-grow-1 d-flex align-items-center gap-2">
+        <input type="text" class="form-control" [(ngModel)]="searchValue"
+          placeholder="🔍 Rechercher un document..." />
+    
+        <!-- 🧭 Critère de recherche -->
+        <select class="form-select w-auto" [(ngModel)]="selectedCriteria">
+          <option value="offreTitre">🏷️ Titre offre</option>
+          <option value="documentTitle">📄 Titre Doc</option>
+          <option value="statut">✅ Statut</option>
+          <option value="typeDocument">📂 Type</option>
+        </select>
+    
+        <!-- ↕️ Bouton de tri -->
+        <button class="btn btn-outline-secondary" (click)="sortDocuments()">
+          ↕️ Trier par date
+        </button>
+      </div>
+    </div>
+    
+  
+  
+  
+    <div class="row">
+        <ng-container *ngIf="getFilteredDocuments().length > 0; else noDocuments">
+          <div class="col-md-6 col-lg-4 mb-4" *ngFor="let doc of getFilteredDocuments()">
+            <div class="card shadow-sm h-100 rounded-4">
+              <div class="card-body d-flex flex-column justify-content-between">
+                <h5 class="card-title text-success">{{ doc.titreDocument || 'CV' }}</h5>
+                <p class="mb-1"><strong>📌 Type :</strong><span class="badge bg-light text-dark">{{ doc.typeDocument }}</span></p>
+                <p class="mb-1">
+                  <strong>🏢 Offre :</strong><span class="badge bg-light text-dark"> {{ offreTitles[doc.stageId] || ('ID: ' + doc.stageId) }}</span>
+                </p>
+                <p class="mb-1"><strong>📅 Ajouté le :</strong> {{ doc.dateUpload | date:'shortDate' }}</p>
+                <p class="mb-1">
+                  <strong>🔗 Lien:</strong>
+                  <a [href]="doc.urlDocument" target="_blank" class="text-decoration-underline text-primary">Voir le document</a>
+                </p>
+                <!-- ✅ Statut -->
+                <div class="mt-3">
+                  <span class="badge"
+                    [ngClass]="{
+                      'bg-success': doc.statutDocument === 'validé',
+                      'bg-danger': doc.statutDocument === 'rejeté',
+                      'bg-warning text-dark': doc.statutDocument === 'en_attente'
+                    }">
+                    {{ doc.statutDocument }}
+                  </span>
+                </div>
+      
+                <!-- 🔗 Lien vers document -->
+<!-- 🔗 Actions -->
+<div class="mt-3 d-flex flex-wrap gap-2">
+  <button class="btn btn-outline-info btn-sm flex-fill" (click)="voirOffre(doc.stageId)">
+    🔍 Voir l’offre
+  </button>
+  <button
+    *ngIf="doc.typeDocument === 'cv' && doc.statutDocument === 'validé'"
+    class="btn btn-outline-warning btn-sm flex-fill"
+    (click)="applyToOffer(doc.stageId)">
+    📄  téléverser
+  </button>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      
+        <!-- ⛔ Message s’il n’y a aucun document -->
+        <ng-template #noDocuments>
+          <div class="col-12 text-center text-muted mt-5">
+            <h5>😕 Aucun document trouvé.</h5>
+            <p>Essayez de modifier vos critères de recherche.</p>
+          </div>
+        </ng-template>
+      </div>
+  </div>
+  <!-- ✅ MODAL : Voir l'offre -->
+<div class="modal fade" id="offreModal" tabindex="-1" aria-labelledby="offreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="offreModalLabel">📄 Détails de l'offre</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="selectedOffre">
+                <h5 class="text-primary">{{ selectedOffre.titre }}</h5>
+                <p><strong>🏢 Entreprise :</strong> {{ selectedOffre.entreprise.nom_entreprise }}</p>
+                <p><strong>📧 Email :</strong> {{ selectedOffre.entreprise.email || 'N/A' }}</p>
+                <p><strong>📍 Adresse :</strong> {{ selectedOffre.entreprise.adresse || 'Non fournie' }}</p>
+                <p><strong>📝 Description :</strong><br>{{ selectedOffre.description }}</p>
+                <p><strong>🗂️ Type :</strong> {{ selectedOffre.type }}</p>
+                <p><strong>📅 Date de publication :</strong> {{ selectedOffre.datePublication | date: 'longDate' }}</p>
+                <p><strong>⏳ Expiration :</strong> {{ selectedOffre.debutExpiration | date: 'longDate' }}</p>
+                <p><strong>✔️ État :</strong>
+                  <span class="badge" [ngClass]="selectedOffre.etat ? 'bg-success' : 'bg-secondary'">
+                    {{ selectedOffre.etat ? 'Active' : 'Inactif' }}
+                  </span>
+                </p>
+              </div>              
+          <div *ngIf="!selectedOffre">
+            <p class="text-muted">Chargement des informations...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

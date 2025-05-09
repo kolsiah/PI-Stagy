@@ -1,0 +1,26 @@
+<div class="offre-card">
+    <div class="offre-card-header">
+      <h3>{{ offre.titre }}</h3> <!-- Affiche le titre de l'offre -->
+    </div>
+    
+    <div class="offre-card-body">
+      <p><strong>Entreprise:</strong> {{ offre.entreprise }}</p> <!-- Affiche le nom de l'entreprise -->
+      <p><strong>Type:</strong> {{ offre.type }}</p> <!-- Affiche le type de l'offre -->
+      <p><strong>Description:</strong> {{ offre.description | slice:0:100 }}...</p> <!-- Affiche une description abrégée -->
+      
+      <!-- Date publication et expiration -->
+      <p><strong>Publié le:</strong> {{ offre.datePublication | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Expire le:</strong> {{ offre.debutExpiration | date:'dd/MM/yyyy' }}</p>
+  
+      <!-- Etat de l'offre -->
+      <p [ngClass]="{'active': offre.etat, 'inactive': !offre.etat}">
+        <strong>Statut:</strong> 
+        <span>{{ offre.etat ? 'Active' : 'Inactive' }}</span>
+      </p>
+    </div>
+  
+    <div class="offre-card-footer">
+      <!-- Bouton pour afficher les détails de l'offre -->
+      <button (click)="goToDetails(offre.id)" class="btn btn-primary">Voir les détails</button>
+    </div>
+  </div>

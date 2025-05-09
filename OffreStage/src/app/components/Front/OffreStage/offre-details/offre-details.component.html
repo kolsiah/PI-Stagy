@@ -1,0 +1,29 @@
+<app-navbar-hr></app-navbar-hr> <br><br><br><br><br><br>
+<div *ngIf="offre" class="offre-details">
+    <h2>{{ offre.titre }}</h2>
+    
+    <div class="info">
+      <p><strong>Entreprise :</strong> {{ offre.entreprise?.nom_entreprise }}</p>
+      <p><strong>Adresse de l'entreprise :</strong> {{ offre.adresseEntreprise }}</p>
+      <p><strong>Description :</strong> {{ offre.description }}</p>
+      <p><strong>Type :</strong> {{ offre.type }}</p>
+    </div>
+  
+    <div class="dates">
+      <p><strong>Date de publication :</strong> {{ offre.datePublication | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Expiration :</strong> {{ offre.debutExpiration | date:'dd/MM/yyyy' }}</p>
+    </div>
+  
+    <p><strong>État :</strong> 
+      <span [ngClass]="{ 'actif': offre.etat, 'expire': !offre.etat }">
+        {{ offre.etat ? 'Active' : 'Expirée' }}
+      </span>
+    </p>
+  
+    <div class="actions">
+      <button routerLink="/offres" class="btn btn-secondary">Retour</button>
+      <button class="btn btn-warning" (click)="modifierOffre()">Modifier</button>
+      <button class="btn btn-danger" (click)="supprimerOffre()">Supprimer</button>
+    </div>
+  </div>
+  <app-start-process></app-start-process>

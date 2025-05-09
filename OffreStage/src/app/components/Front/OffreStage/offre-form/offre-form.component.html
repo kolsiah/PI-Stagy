@@ -1,0 +1,72 @@
+<app-navbar-hr></app-navbar-hr> 
+<br><br><br><br><br><br>
+<div class="container">
+    <h2>{{ isEditMode ? 'Modifier l\'offre' : 'Créer une nouvelle offre' }}</h2>
+  
+    <!-- Affichage des erreurs du formulaire -->
+    <form [formGroup]="offreForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="titre">Titre</label>
+        <input type="text" id="titre" formControlName="titre" class="form-control" />
+        <div *ngIf="offreForm.get('titre')?.invalid && offreForm.get('titre')?.touched" class="text-danger">
+          Le titre est requis.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+        <div *ngIf="offreForm.get('description')?.invalid && offreForm.get('description')?.touched" class="text-danger">
+          La description est requise.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="entreprise">Entreprise</label>
+        <select id="entreprise" formControlName="entreprise" class="form-control">
+          <option *ngFor="let entreprise of entreprises" [value]="entreprise.idEntreprise">{{ entreprise.nomEntreprise }}</option>
+        </select>
+        
+      </div>
+  
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" id="type" formControlName="type" class="form-control" />
+        <div *ngIf="offreForm.get('type')?.invalid && offreForm.get('type')?.touched" class="text-danger">
+          Le type est requis.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="datePublication">Date de publication</label>
+        <input type="date" id="datePublication" formControlName="datePublication" class="form-control" />
+        <div *ngIf="offreForm.get('datePublication')?.invalid && offreForm.get('datePublication')?.touched" class="text-danger">
+          La date de publication est requise.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="debutExpiration">Date d'expiration</label>
+        <input type="date" id="debutExpiration" formControlName="debutExpiration" class="form-control" />
+        <div *ngIf="offreForm.get('debutExpiration')?.invalid && offreForm.get('debutExpiration')?.touched" class="text-danger">
+          La date d'expiration est requise.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="etat">État</label>
+        <select id="etat" formControlName="etat" class="form-control">
+          <option [ngValue]="true">Actif</option>
+          <option [ngValue]="false">Inactif</option>
+        </select>
+        <div *ngIf="offreForm.get('etat')?.invalid && offreForm.get('etat')?.touched" class="text-danger">
+          L'état est requis.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" >
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+    </form>
+  </div>
+  <app-start-process></app-start-process>

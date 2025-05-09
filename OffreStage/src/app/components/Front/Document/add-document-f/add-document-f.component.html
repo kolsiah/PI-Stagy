@@ -1,0 +1,69 @@
+<app-navbar-hr></app-navbar-hr>
+<br><br><br><br><br><br>
+<div class="document-upload-page py-5">
+  <div class="container">
+    <div class="card shadow rounded-4 p-4 mx-auto" style="max-width: 700px;">
+      <h4 class="text-center text-success fw-bold mb-2">
+        📤 Upload Document
+      </h4>
+      <p class="text-center text-muted mb-4">Fill in the details and upload your PDF file</p>
+    
+        <form [formGroup]="documentForm" (ngSubmit)="uploadDocument()" class="forms-sample" enctype="multipart/form-data">
+    
+<!-- Type de Document -->
+<div class="form-group">
+  <label for="typeDocument">Document Type</label>
+  <select class="form-control" id="typeDocument" formControlName="typeDocument">
+    <option value="" disabled selected>Select a document type</option>
+    <option value="rapport_de_stage">Rapport de Stage</option>
+    <option value="journal_de_stage">Journal de Stage</option>
+    <option value="cv">CV</option> <!-- ✅ -->
+  </select>
+</div>
+
+<!-- Titre (affiché si ce n'est pas un CV) -->
+<div class="form-group" *ngIf="documentForm.get('typeDocument')?.value !== 'cv'">
+  <label for="titreDocument">Title</label>
+  <input type="text" class="form-control" id="titreDocument" formControlName="titreDocument" placeholder="Enter title">
+</div>
+
+<!-- Statut (affiché si ce n'est pas un CV) -->
+<div class="form-group" *ngIf="documentForm.get('typeDocument')?.value !== 'cv'">
+  <label for="statutDocument">Status</label>
+  <input type="text" class="form-control" id="statutDocument" formControlName="statutDocument" readonly />
+</div>
+    
+          <!-- Fichier -->
+          <div class="form-group">
+            <label>File Upload</label>
+            <input #fileInput type="file" (change)="onFileChange($event)" class="file-upload-default" accept=".pdf" style="display: none;">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" [value]="file?.name || ''" disabled placeholder="Upload PDF">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button" (click)="fileInput.click()">Select File</button>
+              </span>
+            </div>
+            <small class="text-danger" *ngIf="!file">
+              Please select a file.
+            </small>
+          </div>
+    
+          <!-- Submit -->
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="documentForm.invalid">Submit</button>
+          <div *ngIf="uploadMessage" class="upload-message">
+            <!-- Check if the message contains a URL and turn it into a clickable link -->
+            <a *ngIf="uploadMessage.includes('http')" [href]="uploadMessage.split(' ')[3]" target="_blank">
+              Click here to view the uploaded file
+            </a>
+          </div>
+<!-- 🔙 Lien Retour -->
+<div class="mt-4">
+  <button class="btn btn-outline-secondary" (click)="goBack()">
+    ⬅️ Retour
+  </button>
+</div>
+
+</form>
+</div>
+</div>
+</div>

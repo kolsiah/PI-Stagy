@@ -1,0 +1,60 @@
+<div class="sign-in-container">
+  <section class="login-wrapper">
+    <div class="container">
+      <div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+        <form (ngSubmit)="onSubmit()">
+          <img class="img-responsive" alt="logo" src="assets/img/logo.png">
+
+          <!-- Email Input -->
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-control input-lg"
+              placeholder="Email"
+              [(ngModel)]="email"
+              name="email"
+              required
+              [disabled]="isAccountLocked"
+            />
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control input-lg"
+              placeholder="Password"
+              [(ngModel)]="password"
+              name="password"
+              required
+              [disabled]="isAccountLocked"
+            />
+          </div>
+
+          <!-- Forgot Password Link -->
+          <label><a href="#">Forget Password?</a></label>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" [disabled]="isAccountLocked">Login</button>
+
+          <!-- Create Account Link -->
+          <p>Don't have an account? <a href="#createAccount">Create An Account</a></p>
+
+          <!-- Locked Account Message -->
+          <div *ngIf="isAccountLocked" class="alert alert-danger">
+            Your account is locked due to multiple failed attempts.<br />
+            It will be unlocked in {{ remainingTime }} seconds.
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage && !isAccountLocked" class="alert alert-danger">
+            {{ errorMessage }} (Attempts left: {{ attemptsLeft }})
+          </div>
+
+          <!-- Attempts Counter (hidden, for debugging) -->
+          <div style="display: none;">Failed attempts: {{ failedAttempts }}</div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

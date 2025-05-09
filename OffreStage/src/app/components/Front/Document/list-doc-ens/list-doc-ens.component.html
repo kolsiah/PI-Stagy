@@ -1,0 +1,115 @@
+<app-navbar-hr></app-navbar-hr>
+<br><br><br><br>
+<div class="container py-5">
+    <h2 class="text-center mb-4 text-primary">📁 Tous les  Documents</h2>
+  
+<!-- 🔍 Recherche, critère et tri -->
+<div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4 px-2">
+
+  <!-- 🧠 Zone de recherche -->
+  <div class="flex-grow-1">
+    <label class="form-label mb-1">🔍 Rechercher</label>
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="searchValue"
+           placeholder="Entrez un mot-clé..." />
+  </div>
+<!-- 🧭 Critère de recherche -->
+<div>
+  <label class="form-label mb-1">🎯 Critère</label>
+  <select class="form-select" [(ngModel)]="selectedCriteria">
+    <option value="studentId">🎓 ID Étudiant</option> <!-- ✅ Ajouté -->
+    <option value="documentTitle">📄 Titre</option>
+    <option value="statut">📌 Statut</option>
+    <option value="typeDocument">📂 Type</option>
+  </select>
+</div>
+
+  <!-- ↕️ Tri par date -->
+  <div class="d-flex align-items-end">
+    <button class="btn btn-outline-primary mt-4" (click)="sortDocuments()">
+      ↕️ Trier par date
+    </button>
+  </div>
+
+</div>
+  
+<div class="row">
+    <ng-container *ngIf="getFilteredDocuments().length > 0; else noDocuments">
+    <div class="col-md-6 col-lg-4 mb-4" *ngFor="let doc of getFilteredDocuments()">
+      <div class="card shadow-sm h-100 rounded-4 border border-light-subtle">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title text-success">📄 {{ doc.titreDocument }}</h5>
+
+          <p class="mb-1">
+            <strong>👨‍🎓 Étudiant :</strong>
+            <span class="badge bg-light text-dark">
+              {{ userNames[doc.etudiantId] || '...' }}
+            </span>
+            <small class="text-muted">(ID: {{ doc.etudiantId }})</small>
+          </p>
+          
+          <p class="mb-1">
+            <strong>🏢 Offre :</strong>
+            {{ offreTitles[doc.stageId] || ('ID: ' + doc.stageId) }}
+          </p>
+          
+          <p class="mb-1">
+            <strong>🔗 Lien:</strong>
+            <a [href]="doc.urlDocument" target="_blank" class="text-decoration-underline text-primary">Voir le document</a>
+          </p>
+          
+          <p class="mb-1"><strong>📂 Type:</strong> {{ doc.typeDocument }}</p>
+          
+          <div class="my-2">
+            <span class="badge px-3 py-2"
+              [ngClass]="{
+                'bg-success': doc.statutDocument === 'validé',
+                'bg-danger': doc.statutDocument === 'rejeté',
+                'bg-warning text-dark': doc.statutDocument === 'en_attente'
+              }">
+              {{ doc.statutDocument | uppercase }}
+            </span>
+          </div>
+          
+          <p class="mb-2"><strong>📅 Upload:</strong> {{ doc.dateUpload | date:'dd MMM yyyy' }}</p>
+            
+          <div class="d-flex flex-wrap gap-2 mt-auto">
+            <button class="btn btn-outline-danger btn-sm rounded-pill" (click)="deleteDOC(doc.idDocument)">
+              🗑️ Supprimer
+            </button>
+            <a [routerLink]="['/validation/enseignant']"
+            [queryParams]="{ idDocument: doc.idDocument, idEtudiant: doc.etudiantId, idOffre: doc.stageId }"
+            class="btn btn-outline-success btn-sm">
+            ✅ Valider
+            </a>
+                  
+            <button class="btn btn-outline-info btn-sm rounded-pill" (click)="analyze(doc.idDocument)">
+              📊 Analyser
+            </button>
+          </div>
+  
+          <!-- Résultat de l'analyse -->
+          <div *ngIf="activeResumeId === doc.idDocument" class="mt-3 p-3 rounded border border-info bg-light-subtle">
+            <strong class="text-info">📝 Résumé :</strong>
+            <p class="fst-italic">{{ resume }}</p>
+  
+            <strong class="text-info">💡 Technologies détectées :</strong><br />
+            <span *ngFor="let tech of technologies" class="badge bg-success me-1 mb-1">{{ tech }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+            </ng-container>
+  
+            <!-- ⛔ Message s’il n’y a aucun document -->
+            <ng-template #noDocuments>
+              <div class="col-12 text-center text-muted mt-5">
+                <h5>😕 Aucun document trouvé.</h5>
+                <p>Essayez de modifier vos critères de recherche.</p>
+              </div>
+            </ng-template>
+  </div>
+  
+  </div>
+  

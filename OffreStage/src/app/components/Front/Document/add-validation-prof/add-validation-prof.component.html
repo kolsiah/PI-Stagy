@@ -1,0 +1,32 @@
+<app-navbar-hr></app-navbar-hr>
+<br><br><br><br><br><br>
+<div class="container mt-4">
+    <h3 class="text-primary">Valider un document étudiant</h3>
+  
+    <form [formGroup]="validationForm" (ngSubmit)="onSubmit()">
+          <!-- ID Étudiant -->
+      <div class="mb-3">
+        <label for="statut">Statut</label>
+        <select id="statut" class="form-control" formControlName="statut">
+          <option *ngFor="let s of statutOptions" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="commentaire">Commentaire</label>
+        <textarea id="commentaire" rows="4" class="form-control" formControlName="commentaire"></textarea>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="validationForm.invalid">
+        ✅ Valider le document
+      </button>
+    </form>
+  
+    <div class="mt-3" *ngIf="responseMessage">
+      <div [class.text-success]="responseMessage.includes('succès') || responseMessage.includes('✅')"
+           [class.text-danger]="responseMessage.includes('Erreur') || responseMessage.includes('❌')">
+        {{ responseMessage }}
+      </div>
+    </div>
+  </div>
+  
