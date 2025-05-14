@@ -38,7 +38,7 @@ export class AddDocumentFComponent implements OnInit {
       this.userRole = this.authService.getUserRoleFromToken();
     this.documentForm = this.fb.group({
       typeDocument: ['', Validators.required],
-      titreDocument: ['', [Validators.required, Validators.minLength(10)]],
+      titreDocument: ['', [Validators.required, Validators.minLength(5)]],
       statutDocument: ['en_attente'],
       etudiantId: [this.userId, [Validators.required, Validators.pattern("^[0-9]+$")]],
       stageId: [this.stageId, [Validators.required, Validators.pattern("^[0-9]+$")]],
